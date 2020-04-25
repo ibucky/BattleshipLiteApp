@@ -150,9 +150,19 @@ namespace ConsoleUI
             Console.WriteLine("That's a HIT!!!");
             Console.WriteLine($"{opponent.PlayerName} still has {opponent.RemainingShips} ships left.");
             Console.WriteLine("Press enter to continue.");
+
+            Console.ReadLine();
         }
 
-        internal static void SwitchPlayers(PlayerInfoModel opponent)
+        internal static void DisplayMissMessage()
+        {
+            Console.WriteLine("You missed!");
+            Console.WriteLine("Press enter to continue.");
+
+            Console.ReadLine();
+        }
+
+        internal static void SwitchPlayersMessage(PlayerInfoModel opponent)
         {
             Console.WriteLine($"It's {opponent.PlayerName} turn next.");
             Console.WriteLine($"When {opponent.PlayerName} is ready to take their turn, press enter.");

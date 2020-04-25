@@ -142,11 +142,24 @@ namespace ConsoleUI
                 isValidShot = GameLogic.ValidateShot(shotRequest, opponent);
             }
 
-            //Once the player calls a valid shot, the program determins if it's a hit or a miss
+            //Once the player calls a valid shot, the program determins if it's a hit or a miss,
+            //records the shot, and changes the opponent's number of remianing ships property
             if (GameLogic.IsAHit(shotRequest, opponent) == true)
             {
-                UIDisplay.DisplayHitMessage(opponent);
+                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
 
+                opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
+
+                UIDisplay.DisplayHitMessage(opponent);
+            }
+
+            else
+            {
+                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
+
+                opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
+
+                UIDisplay.DisplayMissMessage();
             }
         }
 

@@ -278,5 +278,24 @@ namespace ClassLibrary
             //If the method fails to record a shot on both grids, this exeption is thrown.
             throw new ApplicationException("Failed to record the shot.");
         }
+
+        public static bool GameIsOver(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
+        {
+            bool output = false;
+
+            if (activePlayer.RemainingShips == 0 || opponent.RemainingShips == 0)
+            {
+                output = true;
+
+                return output;
+            }
+
+            else
+            {
+                output = false;
+
+                return output;
+            }
+        }
     }
 }
