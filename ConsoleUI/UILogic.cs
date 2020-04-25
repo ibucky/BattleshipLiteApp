@@ -24,6 +24,8 @@ namespace ConsoleUI
             //Creates player's shot grid
             newPlayer.ShotsGrid = GameLogic.InitializeGrid();
 
+            newPlayer.RemainingShips = GameLogic.QuantifyRemainingShips(newPlayer);
+
             return newPlayer;
         }
 
@@ -123,12 +125,27 @@ namespace ConsoleUI
             return gridSpot;
         }
 
-        internal static void TakeTurn(PlayerInfoModel activePlayer)
+        internal static void TakeTurn(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
         {
             UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
 
             GridSpotModel shotRequest = UIDisplay.AskForShot();
 
+            //Validates the shot and loops until the shot is valid
+            bool isValidShot = GameLogic.ValidateShot(shotRequest, opponent);
+            while (isValidShot == false)
+            {
+                UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
+
+                shotRequest = UIDisplay.AskForShot();
+                isValidShot = GameLogic.ValidateShot(shotRequest, opponent);
+            }
+
+            //Once the player calls a valid shot, the program determins if it's a hit or a miss
+            if (GameLogic.IsAHit(shotRequest, opponent) == true)
+            {
+                
+            }
         }
 
     }

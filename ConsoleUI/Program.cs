@@ -14,6 +14,9 @@ namespace ConsoleUI
             UIDisplay.ApplicationStartMessage();
 
             PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1");
+
+            Console.WriteLine(activePlayer.RemainingShips);
+
             PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2");
 
             Console.ReadLine();

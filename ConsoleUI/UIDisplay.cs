@@ -143,5 +143,11 @@ namespace ConsoleUI
 
             return output;
         }
+
+        internal static void DisplayHitMessage()
+        {
+            Console.WriteLine("That's a HIT!!!");
+            Console.WriteLine("You have sunk ");
+        }
     }
 }

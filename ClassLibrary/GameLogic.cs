@@ -10,6 +10,26 @@ namespace ClassLibrary
     public class GameLogic
     {
         //Private Methods
+        private static bool GridSpotHasShip(GridSpotModel gridSpotInput, List<GridSpotModel> grid)
+        {
+            bool output = false;
+            //Searches the grid which was passed in
+            foreach (GridSpotModel gridSpot in grid)
+            {
+                //and matches the spot in the grid which was passed in to the specific grid spot that was wassed in
+                if (gridSpot.SpotLetter == gridSpotInput.SpotLetter & gridSpot.SpotNumber == gridSpotInput.SpotNumber)
+                {
+                    //then looks to see if the spot in the grid is "empty" status
+                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
+                    {
+                        output = true;
+                    }
+                }
+            }
+
+            return output;
+        }
+
         private static bool IsValidGridSpotSelection(GridSpotModel gridSpotInput, List<GridSpotModel> grid)
         {
             bool output = false;
@@ -44,26 +64,6 @@ namespace ClassLibrary
                 {
                     //then looks to see if the spot in the grid is "empty" status
                     if (gridSpot.SpotStatus == GridSpotStatus.Empty)
-                    {
-                        output = true;
-                    }
-                }
-            }
-
-            return output;
-        }
-
-        private static bool GridSpotHasShip(GridSpotModel gridSpotInput, List<GridSpotModel> grid)
-        {
-            bool output = false;
-            //Searches the grid which was passed in
-            foreach (GridSpotModel gridSpot in grid)
-            {
-                //and matches the spot in the grid which was passed in to the specific grid spot that was wassed in
-                if (gridSpot.SpotLetter == gridSpotInput.SpotLetter & gridSpot.SpotNumber == gridSpotInput.SpotNumber)
-                {
-                    //then looks to see if the spot in the grid is "empty" status
-                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
                     {
                         output = true;
                     }
@@ -196,6 +196,43 @@ namespace ClassLibrary
 
                 return output;
             }
+        }
+
+        public static bool IsAHit(GridSpotModel shot, PlayerInfoModel opponent)
+        {
+            bool output = false;
+
+            if (GridSpotHasShip(shot, opponent.ShipLocations) == true)
+            {
+                output = true;
+
+                return output;
+            }
+
+            else
+            {
+                output = false;
+
+                return output;
+            }
+        }
+
+        public static int QuantifyRemainingShips(PlayerInfoModel player)
+        {
+            int shipCount = 0;
+            //Search player's shipgrid for ships
+            foreach (GridSpotModel gridSpot in player.ShipLocations)
+            {
+                bool shipExists = GridSpotHasShip(gridSpot, player.ShipLocations);
+               
+                //Every ship the search encounters adds one more to the ship count
+                if (shipExists == true)
+                {
+                    shipCount++;
+                }
+            }
+
+            return shipCount;
         }
     }
 }
