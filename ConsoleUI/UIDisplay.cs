@@ -32,6 +32,7 @@ namespace ConsoleUI
             Console.WriteLine("Press enter to end the game.");
 
             Console.ReadLine();
+            Console.Clear();
         }
 
         internal static void GetPlayerName(PlayerInfoModel player)
@@ -145,7 +146,8 @@ namespace ConsoleUI
 
         internal static GridSpotModel AskForShot()
         {
-            Console.WriteLine("Where would you like to fire: ");
+            Console.WriteLine();
+            Console.Write("Where would you like to fire: ");
             string gridSpotSelection = Console.ReadLine();
 
             GridSpotModel output = UILogic.ParseStringToGridSpot(gridSpotSelection);
@@ -179,6 +181,7 @@ namespace ConsoleUI
 
         internal static void DisplayTurnHeader(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
         {
+            Console.Clear();
             Console.WriteLine($"It is now {activePlayer.PlayerName}'s turn.");
             Console.WriteLine($"{activePlayer.PlayerName} has sunk {5 - opponent.RemainingShips} of {opponent.PlayerName}'s ships.");
             Console.WriteLine("Press enter to continue.");

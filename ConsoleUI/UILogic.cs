@@ -151,7 +151,8 @@ namespace ConsoleUI
             //records the shot, and changes the opponent's number of remianing ships property
             if (GameLogic.IsAHit(shotRequest, opponent) == true)
             {
-                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
+                GameLogic.RecordShotToOpponentShipGrid(shotRequest, opponent);
+                GameLogic.RecordShotToActivePlayerShotsGrid(shotRequest, activePlayer);
 
                 opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
 
@@ -160,7 +161,8 @@ namespace ConsoleUI
 
             else
             {
-                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
+                GameLogic.RecordShotToOpponentShipGrid(shotRequest, opponent);
+                GameLogic.RecordShotToActivePlayerShotsGrid(shotRequest, activePlayer);
 
                 opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
 

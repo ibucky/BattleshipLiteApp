@@ -23,6 +23,8 @@ namespace ClassLibrary
                     if (gridSpot.SpotStatus == GridSpotStatus.Ship)
                     {
                         output = true;
+
+                        return output;
                     }
                 }
             }
@@ -235,7 +237,7 @@ namespace ClassLibrary
             return shipCount;
         }
 
-        public static void RecordShot(GridSpotModel shot, PlayerInfoModel activePlayer, PlayerInfoModel opponent)
+        public static void RecordShotToOpponentShipGrid(GridSpotModel shot, PlayerInfoModel opponent)
         {
             //Changes opponent's ship grid
             foreach (GridSpotModel gridSpot in opponent.ShipLocations)
@@ -245,15 +247,24 @@ namespace ClassLibrary
                     if (gridSpot.SpotStatus == GridSpotStatus.Ship)
                     {
                         gridSpot.SpotStatus = GridSpotStatus.Sunk;
+
+                        return;
                     }
 
                     else if (gridSpot.SpotStatus == GridSpotStatus.Empty)
                     {
                         gridSpot.SpotStatus = GridSpotStatus.Miss;
+
+                        return;
                     }
                 }
             }
+            //If the method fails to record a shot on both grids, this exeption is thrown.
+            throw new ApplicationException("Failed to record the shot.");
+        }
 
+        public static void RecordShotToActivePlayerShotsGrid(GridSpotModel shot, PlayerInfoModel activePlayer)
+        {
             //Changes activePlayer's shot grid
             foreach (GridSpotModel gridSpot in activePlayer.ShotsGrid)
             {
@@ -274,11 +285,10 @@ namespace ClassLibrary
                     }
                 }
             }
-
             //If the method fails to record a shot on both grids, this exeption is thrown.
             throw new ApplicationException("Failed to record the shot.");
         }
-
+            
         public static bool GameIsOver(PlayerInfoModel opponent)
         {
             bool output = false;
