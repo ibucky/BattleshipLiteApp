@@ -53,6 +53,47 @@ namespace ClassLibrary
             return output;
         }
 
+        private static bool GridSpotHasShip(GridSpotModel gridSpotInput, List<GridSpotModel> grid)
+        {
+            bool output = false;
+            //Searches the grid which was passed in
+            foreach (GridSpotModel gridSpot in grid)
+            {
+                //and matches the spot in the grid which was passed in to the specific grid spot that was wassed in
+                if (gridSpot.SpotLetter == gridSpotInput.SpotLetter & gridSpot.SpotNumber == gridSpotInput.SpotNumber)
+                {
+                    //then looks to see if the spot in the grid is "empty" status
+                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
+                    {
+                        output = true;
+                    }
+                }
+            }
+
+            return output;
+        }
+
+        private static bool GridSpotAlreadyFiredOn(GridSpotModel gridSpotInput, List<GridSpotModel> grid)
+        {
+            bool output = false;
+            //Searches the grid which was passed in
+            foreach (GridSpotModel gridSpot in grid)
+            {
+                //and matches the spot in the grid which was passed in to the specific grid spot that was wassed in
+                if (gridSpot.SpotLetter == gridSpotInput.SpotLetter & gridSpot.SpotNumber == gridSpotInput.SpotNumber)
+                {
+                    //then looks to see if the spot in the grid is "empty" status
+                    if (gridSpot.SpotStatus == GridSpotStatus.Hit || gridSpot.SpotStatus == GridSpotStatus.Miss
+                        || gridSpot.SpotStatus == GridSpotStatus.Sunk)
+                    {
+                        output = true;
+                    }
+                }
+            }
+
+            return output;
+        }
+
         //Public Methods
         public static List<GridSpotModel> InitializeGrid()
         {
@@ -128,6 +169,20 @@ namespace ClassLibrary
             }
             //If the selected spot is still not valid, somehting is seriosly wrong and this custom exception will be thrown.
             throw new ApplicationException("Attempt to record ship placement has failed: could not match input gridSpot to active grid.");
+        }
+
+        public static bool ValidateShot(GridSpotModel shot, PlayerInfoModel opponent)
+        {
+            //Takes in player's shot attempt
+
+            //Compares that shot to the opponent's ship locations grid to see if it's on the grid and if they
+            //have already fired on that spot
+            bool isValidGridSpot = IsValidGridSpotSelection(shot, opponent.ShipLocations);
+            bool isEmptyGridSpot = GridSpotIsEmpty(shot, opponent.ShipLocations);
+            bool shipInGridSpot = GridSpotHasShip(shot, opponent.ShipLocations);
+
+
+            //If the spot is "empty" or "ship" the shot is valid
         }
     }
 }

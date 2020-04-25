@@ -125,6 +125,9 @@ namespace ConsoleUI
 
         internal static void TakeTurn(PlayerInfoModel activePlayer)
         {
+            UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
+
+            GridSpotModel shotRequest = UIDisplay.AskForShot();
 
         }
 
