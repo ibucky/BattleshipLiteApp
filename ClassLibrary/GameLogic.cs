@@ -173,16 +173,29 @@ namespace ClassLibrary
 
         public static bool ValidateShot(GridSpotModel shot, PlayerInfoModel opponent)
         {
-            //Takes in player's shot attempt
+            bool output = false;
 
             //Compares that shot to the opponent's ship locations grid to see if it's on the grid and if they
             //have already fired on that spot
             bool isValidGridSpot = IsValidGridSpotSelection(shot, opponent.ShipLocations);
             bool isEmptyGridSpot = GridSpotIsEmpty(shot, opponent.ShipLocations);
             bool shipInGridSpot = GridSpotHasShip(shot, opponent.ShipLocations);
+            bool alreadyFiredOn = GridSpotAlreadyFiredOn(shot, opponent.ShipLocations);
 
+            if (isValidGridSpot == true || isEmptyGridSpot == true || alreadyFiredOn == false)
+            {
+                output = true;
+
+                return output;
+            }
 
             //If the spot is "empty" or "ship" the shot is valid
+            else
+            {
+                output = false;
+
+                return output;
+            }
         }
     }
 }
