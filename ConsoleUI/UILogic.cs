@@ -26,10 +26,12 @@ namespace ConsoleUI
 
         internal static GridSpotModel ParseStringToGridSpot(string input)
         {
-            //Figures out if the length is right
+            //Figures out if the length of the input is correct
             GridSpotModel gridSpot = new GridSpotModel();
             if (input.Length != 2)
             {
+                //In order to get the grid to display accurately each time, the output is set to something that will be
+                //erronius in the next level of method up instead of having to pass in an active grid into this method as well
                 gridSpot.SpotLetter = "Z";
                 gridSpot.SpotNumber = 9;
 

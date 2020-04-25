@@ -9,6 +9,16 @@ namespace ConsoleUI
 {
     internal class UIDisplay
     {
+        //Private Methods
+        private static string GetShipPlacementSelection(int placementListCount)
+        {
+            Console.Write($"Where would you like to place ship {placementListCount + 1}: ");
+            string output = Console.ReadLine();
+
+            return output;
+        }
+
+        //Internal Methods
         internal static void ApplicationStartMessage()
         {
             Console.WriteLine("Welcome to Battleship Lite!");
@@ -95,8 +105,7 @@ namespace ConsoleUI
                 GridSpotModel gridSpotSelection = UILogic.ParseStringToGridSpot(newPlacement);
 
 
-                //Check to see if that spot is a valid spot on the grid or if they have
-                //already placed a ship there
+                //Check to see if that spot is a valid spot on the grid or if they have already placed a ship there
                 isValidPlacement = GameLogic.IsValidShipPlacement(gridSpotSelection, newPlayer.ShipLocations);
                 while (isValidPlacement == false)
                 {
@@ -114,7 +123,7 @@ namespace ConsoleUI
                     isValidPlacement = GameLogic.IsValidShipPlacement(gridSpotSelection, newPlayer.ShipLocations);
                 }
 
-                //Mark gridspot as "ship" if the selection is valid
+                //Mark gridspot status as "ship" if the selection is valid
                 GameLogic.RecordShipPlacement(gridSpotSelection, newPlayer.ShipLocations);
 
                 shipPlacements.Add(gridSpotSelection);
@@ -123,24 +132,6 @@ namespace ConsoleUI
 
             //Loop back through until player has placed all five ships
             } while (shipPlacements.Count < 5);
-        }
-
-        private static string GetShipPlacementSelection(int placementListCount)
-        {
-            Console.Write($"Where would you like to place ship {placementListCount + 1}: ");
-            string output = Console.ReadLine();
-
-            return output;
-        }
-
-        public static string RetryShipPlacement(List<GridSpotModel> activeGrid)
-        {
-            Console.Clear();
-            Console.WriteLine("Oops!  That is not a valid ship placement!  Please try again.");
-            DisplayGrid(activeGrid);
-            string output = Console.ReadLine();
-
-            return output;
         }
     }
 }
