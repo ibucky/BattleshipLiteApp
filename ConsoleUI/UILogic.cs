@@ -128,6 +128,8 @@ namespace ConsoleUI
 
         internal static void TakeTurn(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
         {
+            UIDisplay.DisplayTurnHeader(activePlayer, opponent);
+
             UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
 
             GridSpotModel shotRequest = UIDisplay.AskForShot();

@@ -15,6 +15,15 @@ namespace ConsoleUI
 
             PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1");
             PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2");
+            
+            bool gameIsOver = false;
+            do
+            {
+
+                //Determine if the game is over
+                gameIsOver = GameLogic.GameIsOver(activePlayer, opponent);
+
+            } while (gameIsOver = false);
 
             Console.ReadLine();
         }

@@ -167,5 +167,14 @@ namespace ConsoleUI
             Console.WriteLine($"It's {opponent.PlayerName} turn next.");
             Console.WriteLine($"When {opponent.PlayerName} is ready to take their turn, press enter.");
         }
+
+        internal static void DisplayTurnHeader(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
+        {
+            Console.WriteLine($"It is now {activePlayer.PlayerName}'s turn.");
+            Console.WriteLine($"{activePlayer.PlayerName} has sunk {5 - opponent.RemainingShips} of {opponent.PlayerName}'s ships.");
+            Console.WriteLine("Press enter to continue.");
+
+            Console.ReadLine();
+        }
     }
 }
