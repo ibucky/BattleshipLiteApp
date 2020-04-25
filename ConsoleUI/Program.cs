@@ -16,14 +16,28 @@ namespace ConsoleUI
             PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1");
             PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2");
             
-            bool gameIsOver = false;
+            PlayerInfoModel winner = null;
             do
             {
+                UILogic.TakeTurn(activePlayer, opponent);
 
                 //Determine if the game is over
-                gameIsOver = GameLogic.GameIsOver(activePlayer, opponent);
+                if (GameLogic.GameIsOver(opponent) == true)
+                {
+                    UIDisplay.EndGameMessage(activePlayer);
 
-            } while (gameIsOver = false);
+                    winner = activePlayer;
+                }
+
+                else
+                {
+                    activePlayer.TotalTurns++;
+
+                    //Switch player spots for next turn
+                    (activePlayer, opponent) = (opponent, activePlayer);
+                }
+
+            } while (winner == null);
 
             Console.ReadLine();
         }

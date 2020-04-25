@@ -279,11 +279,11 @@ namespace ClassLibrary
             throw new ApplicationException("Failed to record the shot.");
         }
 
-        public static bool GameIsOver(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
+        public static bool GameIsOver(PlayerInfoModel opponent)
         {
             bool output = false;
 
-            if (activePlayer.RemainingShips == 0 || opponent.RemainingShips == 0)
+            if (opponent.RemainingShips == 0)
             {
                 output = true;
 

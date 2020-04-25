@@ -12,5 +12,6 @@ namespace ClassLibrary
         public List<GridSpotModel> ShipLocations { get; set; } = new List<GridSpotModel>();
         public List<GridSpotModel> ShotsGrid { get; set; } = new List<GridSpotModel>();
         public int RemainingShips { get; set; }
+        public int TotalTurns { get; set; }
     }
 }

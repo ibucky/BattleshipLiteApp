@@ -27,6 +27,9 @@ namespace ConsoleUI
             //Sets player's number of remaining ships property
             newPlayer.RemainingShips = GameLogic.QuantifyRemainingShips(newPlayer);
 
+            //Sets player's number of turns to zero
+            newPlayer.TotalTurns = 0;
+
             return newPlayer;
         }
 

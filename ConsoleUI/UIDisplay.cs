@@ -25,6 +25,15 @@ namespace ConsoleUI
             Console.WriteLine("This app was created by Bucky Harmos");
         }
 
+        internal static void EndGameMessage(PlayerInfoModel activePlayer)
+        {
+            Console.WriteLine($"{activePlayer.PlayerName} has won!!!");
+            Console.WriteLine($"{activePlayer.PlayerName} took {activePlayer.TotalTurns} turns to win.");
+            Console.WriteLine("Press enter to end the game.");
+
+            Console.ReadLine();
+        }
+
         internal static void GetPlayerName(PlayerInfoModel player)
         {
             Console.Write("Please enter your name: ");
