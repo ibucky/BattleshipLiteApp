@@ -21,6 +21,9 @@ namespace ConsoleUI
 
             Console.Clear();
 
+            //Creates player's shot grid
+            newPlayer.ShotsGrid = GameLogic.InitializeGrid();
+
             return newPlayer;
         }
 
@@ -37,9 +40,9 @@ namespace ConsoleUI
 
                 return gridSpot;
             }
-            
+
             //Net of if statements to assign the correct letter to the gridSpot
-            if (input.Substring(0,1).ToLower() == "a")
+            if (input.Substring(0, 1).ToLower() == "a")
             {
                 gridSpot.SpotLetter = "A";
             }
@@ -118,6 +121,12 @@ namespace ConsoleUI
             }
 
             return gridSpot;
-        }        
+        }
+
+        internal static void TakeTurn(PlayerInfoModel activePlayer)
+        {
+
+        }
+
     }
 }

@@ -133,5 +133,15 @@ namespace ConsoleUI
             //Loop back through until player has placed all five ships
             } while (shipPlacements.Count < 5);
         }
+
+        internal static GridSpotModel AskForShot()
+        {
+            Console.WriteLine("Where would you like to fire: ");
+            string gridSpotSelection = Console.ReadLine();
+
+            GridSpotModel output = UILogic.ParseStringToGridSpot(gridSpotSelection);
+
+            return output;
+        }
     }
 }

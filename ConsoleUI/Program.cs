@@ -13,10 +13,9 @@ namespace ConsoleUI
         {
             UIDisplay.ApplicationStartMessage();
 
-            PlayerInfoModel testPlayer = UILogic.CreatePlayer("Test Player");
+            PlayerInfoModel activePlayer = UILogic.CreatePlayer("Player 1");
+            PlayerInfoModel opponent = UILogic.CreatePlayer("Player 2");
 
-            UIDisplay.DisplayGrid(testPlayer.ShipLocations);
-            
             Console.ReadLine();
         }
     }
