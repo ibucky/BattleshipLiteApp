@@ -24,6 +24,7 @@ namespace ConsoleUI
             //Creates player's shot grid
             newPlayer.ShotsGrid = GameLogic.InitializeGrid();
 
+            //Sets player's number of remaining ships property
             newPlayer.RemainingShips = GameLogic.QuantifyRemainingShips(newPlayer);
 
             return newPlayer;
@@ -144,7 +145,8 @@ namespace ConsoleUI
             //Once the player calls a valid shot, the program determins if it's a hit or a miss
             if (GameLogic.IsAHit(shotRequest, opponent) == true)
             {
-                
+                UIDisplay.DisplayHitMessage(opponent);
+
             }
         }
 

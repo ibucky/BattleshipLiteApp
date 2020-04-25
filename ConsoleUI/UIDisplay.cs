@@ -144,10 +144,18 @@ namespace ConsoleUI
             return output;
         }
 
-        internal static void DisplayHitMessage()
+        internal static void DisplayHitMessage(PlayerInfoModel opponent)
         {
+            Console.Clear();
             Console.WriteLine("That's a HIT!!!");
-            Console.WriteLine("You have sunk ");
+            Console.WriteLine($"{opponent.PlayerName} still has {opponent.RemainingShips} ships left.");
+            Console.WriteLine("Press enter to continue.");
+        }
+
+        internal static void SwitchPlayers(PlayerInfoModel opponent)
+        {
+            Console.WriteLine($"It's {opponent.PlayerName} turn next.");
+            Console.WriteLine($"When {opponent.PlayerName} is ready to take their turn, press enter.");
         }
     }
 }

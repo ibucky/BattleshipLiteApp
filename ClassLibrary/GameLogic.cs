@@ -234,5 +234,49 @@ namespace ClassLibrary
 
             return shipCount;
         }
+
+        public static void RecordShot(GridSpotModel shot, PlayerInfoModel activePlayer, PlayerInfoModel opponent)
+        {
+            //Changes opponent's ship grid
+            foreach (GridSpotModel gridSpot in opponent.ShipLocations)
+            {
+                if (shot.SpotLetter == gridSpot.SpotLetter || shot.SpotNumber == gridSpot.SpotNumber)
+                {
+                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
+                    {
+                        gridSpot.SpotStatus = GridSpotStatus.Sunk;
+                    }
+
+                    else if (gridSpot.SpotStatus == GridSpotStatus.Empty)
+                    {
+                        gridSpot.SpotStatus = GridSpotStatus.Miss;
+                    }
+                }
+            }
+
+            //Changes activePlayer's shot grid
+            foreach (GridSpotModel gridSpot in activePlayer.ShotsGrid)
+            {
+                if (shot.SpotLetter == gridSpot.SpotLetter || shot.SpotNumber == gridSpot.SpotNumber)
+                {
+                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
+                    {
+                        gridSpot.SpotStatus = GridSpotStatus.Hit;
+
+                        return;
+                    }
+
+                    else if (gridSpot.SpotStatus == GridSpotStatus.Empty)
+                    {
+                        gridSpot.SpotStatus = GridSpotStatus.Miss;
+
+                        return;
+                    }
+                }
+            }
+
+            //If the method fails to record a shot on both grids, this exeption is thrown.
+            throw new ApplicationException("Failed to record the shot.");
+        }
     }
 }
