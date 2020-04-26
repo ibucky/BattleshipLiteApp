@@ -12,7 +12,7 @@ namespace ConsoleUI
     {
         internal static PlayerInfoModel CreatePlayer(string playerTag)
         {
-            Console.WriteLine($"Build {playerTag}");
+            Console.WriteLine($"{playerTag}");
 
             PlayerInfoModel newPlayer = new PlayerInfoModel();
 
@@ -133,9 +133,7 @@ namespace ConsoleUI
         {
             UIDisplay.DisplayTurnHeader(activePlayer, opponent);
 
-            UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
-
-            GridSpotModel shotRequest = UIDisplay.AskForShot();
+            GridSpotModel shotRequest = UIDisplay.AskForShot(activePlayer, opponent);
 
             //Validates the shot and loops until the shot is valid
             bool isValidShot = GameLogic.ValidateShot(shotRequest, opponent);
@@ -143,7 +141,7 @@ namespace ConsoleUI
             {
                 UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
 
-                shotRequest = UIDisplay.AskForShot();
+                shotRequest = UIDisplay.AskForShot(activePlayer, opponent);
                 isValidShot = GameLogic.ValidateShot(shotRequest, opponent);
             }
 
@@ -151,18 +149,16 @@ namespace ConsoleUI
             //records the shot, and changes the opponent's number of remianing ships property
             if (GameLogic.IsAHit(shotRequest, opponent) == true)
             {
-                GameLogic.RecordShotToOpponentShipGrid(shotRequest, opponent);
-                GameLogic.RecordShotToActivePlayerShotsGrid(shotRequest, activePlayer);
+                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
 
-                opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
+                opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent); 
 
                 UIDisplay.DisplayHitMessage(opponent);
             }
 
             else
             {
-                GameLogic.RecordShotToOpponentShipGrid(shotRequest, opponent);
-                GameLogic.RecordShotToActivePlayerShotsGrid(shotRequest, activePlayer);
+                GameLogic.RecordShot(shotRequest, activePlayer, opponent);
 
                 opponent.RemainingShips = GameLogic.QuantifyRemainingShips(opponent);
 

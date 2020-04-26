@@ -31,15 +31,11 @@ namespace ConsoleUI
 
                 else
                 {
-                    activePlayer.TotalTurns++;
-
                     //Switch player spots for next turn
                     (activePlayer, opponent) = (opponent, activePlayer);
                 }
 
             } while (winner == null);
-
-            Console.ReadLine();
         }
     }
 }

@@ -184,7 +184,7 @@ namespace ClassLibrary
             bool shipInGridSpot = GridSpotHasShip(shot, opponent.ShipLocations);
             bool alreadyFiredOn = GridSpotAlreadyFiredOn(shot, opponent.ShipLocations);
 
-            if (isValidGridSpot == true || isEmptyGridSpot == true || alreadyFiredOn == false)
+            if (isValidGridSpot == true & alreadyFiredOn == false)
             {
                 output = true;
 
@@ -237,25 +237,45 @@ namespace ClassLibrary
             return shipCount;
         }
 
-        public static void RecordShotToOpponentShipGrid(GridSpotModel shot, PlayerInfoModel opponent)
+        public static void RecordShot(GridSpotModel shot, PlayerInfoModel activePlayer, PlayerInfoModel opponent)
         {
             //Changes opponent's ship grid
             foreach (GridSpotModel gridSpot in opponent.ShipLocations)
             {
-                if (shot.SpotLetter == gridSpot.SpotLetter || shot.SpotNumber == gridSpot.SpotNumber)
+                if (shot.SpotLetter == gridSpot.SpotLetter & shot.SpotNumber == gridSpot.SpotNumber)
                 {
                     if (gridSpot.SpotStatus == GridSpotStatus.Ship)
                     {
                         gridSpot.SpotStatus = GridSpotStatus.Sunk;
 
-                        return;
+                        foreach (GridSpotModel shotGridSpot in activePlayer.ShotsGrid)
+                        {
+                            if (shot.SpotLetter == shotGridSpot.SpotLetter & shot.SpotNumber == shotGridSpot.SpotNumber)
+                            {
+                                shotGridSpot.SpotStatus = GridSpotStatus.Hit;
+
+                                activePlayer.TotalTurns++;
+
+                                return;
+                            }
+                        }
                     }
 
                     else if (gridSpot.SpotStatus == GridSpotStatus.Empty)
                     {
                         gridSpot.SpotStatus = GridSpotStatus.Miss;
 
-                        return;
+                        foreach (GridSpotModel shotGridSpot in activePlayer.ShotsGrid)
+                        {
+                            if (shot.SpotLetter == shotGridSpot.SpotLetter & shot.SpotNumber == shotGridSpot.SpotNumber)
+                            {
+                                shotGridSpot.SpotStatus = GridSpotStatus.Miss;
+
+                                activePlayer.TotalTurns++;
+
+                                return;
+                            }
+                        }
                     }
                 }
             }
@@ -263,32 +283,6 @@ namespace ClassLibrary
             throw new ApplicationException("Failed to record the shot.");
         }
 
-        public static void RecordShotToActivePlayerShotsGrid(GridSpotModel shot, PlayerInfoModel activePlayer)
-        {
-            //Changes activePlayer's shot grid
-            foreach (GridSpotModel gridSpot in activePlayer.ShotsGrid)
-            {
-                if (shot.SpotLetter == gridSpot.SpotLetter || shot.SpotNumber == gridSpot.SpotNumber)
-                {
-                    if (gridSpot.SpotStatus == GridSpotStatus.Ship)
-                    {
-                        gridSpot.SpotStatus = GridSpotStatus.Hit;
-
-                        return;
-                    }
-
-                    else if (gridSpot.SpotStatus == GridSpotStatus.Empty)
-                    {
-                        gridSpot.SpotStatus = GridSpotStatus.Miss;
-
-                        return;
-                    }
-                }
-            }
-            //If the method fails to record a shot on both grids, this exeption is thrown.
-            throw new ApplicationException("Failed to record the shot.");
-        }
-            
         public static bool GameIsOver(PlayerInfoModel opponent)
         {
             bool output = false;

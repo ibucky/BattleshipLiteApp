@@ -23,10 +23,14 @@ namespace ConsoleUI
         {
             Console.WriteLine("Welcome to Battleship Lite!");
             Console.WriteLine("This app was created by Bucky Harmos");
+            Console.WriteLine("Press enter to begin the game.");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         internal static void EndGameMessage(PlayerInfoModel activePlayer)
         {
+            Console.Clear();
             Console.WriteLine($"{activePlayer.PlayerName} has won!!!");
             Console.WriteLine($"{activePlayer.PlayerName} took {activePlayer.TotalTurns} turns to win.");
             Console.WriteLine("Press enter to end the game.");
@@ -42,7 +46,8 @@ namespace ConsoleUI
         }
 
         internal static void DisplayGrid(List<GridSpotModel> grid)
-        {  
+        {
+            //Console.Clear();
             string currentGridSpotLetter = "A";
 
             //Writes the numbers above the grid
@@ -144,14 +149,33 @@ namespace ConsoleUI
             } while (shipPlacements.Count < 5);
         }
 
-        internal static GridSpotModel AskForShot()
+        internal static GridSpotModel AskForShot(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
         {
+            bool isValidShot = false;
+
+            UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
             Console.WriteLine();
-            Console.Write("Where would you like to fire: ");
+            Console.Write($"{activePlayer.PlayerName}: Where would you like to fire: ");
             string gridSpotSelection = Console.ReadLine();
 
             GridSpotModel output = UILogic.ParseStringToGridSpot(gridSpotSelection);
 
+            isValidShot = GameLogic.ValidateShot(output, opponent);
+
+            while (isValidShot == false)
+            {
+                Console.Clear();
+                Console.WriteLine($"Oops!  \"{gridSpotSelection}\" was not a valid shot.  Please try again.");
+
+                UIDisplay.DisplayGrid(activePlayer.ShotsGrid);
+                Console.WriteLine();
+                Console.Write($"{activePlayer.PlayerName}: Where would you like to fire: ");
+                gridSpotSelection = Console.ReadLine();
+
+                output = UILogic.ParseStringToGridSpot(gridSpotSelection);
+
+                isValidShot = GameLogic.ValidateShot(output, opponent);
+            }
             return output;
         }
 
@@ -159,14 +183,24 @@ namespace ConsoleUI
         {
             Console.Clear();
             Console.WriteLine("That's a HIT!!!");
-            Console.WriteLine($"{opponent.PlayerName} still has {opponent.RemainingShips} ships left.");
-            Console.WriteLine("Press enter to continue.");
+            if (opponent.RemainingShips > 1)
+            {
+                Console.WriteLine($"{opponent.PlayerName} still has {opponent.RemainingShips} ships left.");
+            }
+
+            else if (opponent.RemainingShips == 1)
+            {
+                Console.WriteLine($"{opponent.PlayerName} only has {opponent.RemainingShips} ship left!");
+            }
+
+            Console.WriteLine("Press enter to continue");
 
             Console.ReadLine();
         }
 
         internal static void DisplayMissMessage()
         {
+            Console.Clear();
             Console.WriteLine("You missed!");
             Console.WriteLine("Press enter to continue.");
 
@@ -187,6 +221,7 @@ namespace ConsoleUI
             Console.WriteLine("Press enter to continue.");
 
             Console.ReadLine();
+            Console.Clear();
         }
     }
 }
